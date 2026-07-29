@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fiji Campus Bus & Weather Dashboard</title>
+
+  <style>
+    /* -----------------------------
+       General page styling
+    ------------------------------*/
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #eef5ff;
+      margin: 0;
+      padding: 30px;
+      color: #333;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    h1 {
+      text-align: center;
+      color: #005b96;
+    }
+
+    .section {
+      margin-top: 25px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 12px;
+      padding: 10px 18px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background: #005fa3;
+    }
+
+    #result,
+    .weather-box {
+      margin-top: 15px;
+      padding: 15px;
+      background: #f4f8fc;
+      border-left: 5px solid #0077cc;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Fiji Campus Bus & Weather Dashboard</h1>
+
+    <!-- Bus Fare Calculator -->
+    <div class="section">
+      <label for="budget">Enter your bus fare budget (FJD):</label>
+
+      <input
+        type="number"
+        id="budget"
+        placeholder="e.g. 15"
+        min="0"
+        step="0.01"
+      >
+
+      <button onclick="calculateRides()">
+        Calculate Bus Rides
+      </button>
+
+      <div id="result"></div>
+    </div>
+
+    <!-- Weather Forecast -->
+    <div class="section">
+      <h2>Today's Weather Forecast (Suva)</h2>
+
+      <!--
+        This is a sample weather display.
+        In a real application, JavaScript could
+        retrieve live weather information from
+        a weather API.
+      -->
+      <div class="weather-box">
+        🌤️ Partly cloudy<br>
+        🌡️ Temperature: 28°C<br>
+        💨 Wind: Light easterly breeze<br>
+        🌧️ Chance of rain: 30%
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /*
+      Calculates how many bus rides
+      a student can afford.
+
+      Assumption:
+      Each ride costs FJD 1.50.
+    */
+    function calculateRides() {
+      const farePerRide = 1.50;
+
+      // Read the user's input
+      const budgetInput = document.getElementById("budget").value;
+      const budget = parseFloat(budgetInput);
+
+      // Get the result display area
+      const result = document.getElementById("result");
+
+      // Check if the input is empty, not a number, or negative
+      if (budgetInput.trim() === "" || isNaN(budget) || budget < 0) {
+        result.style.color = "red";
+        result.innerHTML = "Please enter a valid positive dollar amount.";
+        return;
+      }
+
+      // Change text colour back for valid results
+      result.style.color = "black";
+
+      // Calculate the maximum whole number of rides
+      const rides = Math.floor(budget / farePerRide);
+
+      // Display the result
+      result.innerHTML =
+        `With FJD ${budget.toFixed(2)}, you can afford <strong>${rides}</strong> bus ride(s).`;
+    }
+  </script>
+
+  <!--
+    Code Summary
+
+    HTML:
+    - Creates the dashboard layout.
+    - Includes a budget input, calculate button,
+      result area, and weather forecast box.
+
+    CSS:
+    - Styles the dashboard with colours,
+      spacing, and rounded corners.
+
+    JavaScript:
+    - Reads the user's budget.
+    - Checks whether the input is empty,
+      negative, or invalid.
+    - Displays a red error message:
+      "Please enter a valid positive dollar amount."
+      if the input is invalid.
+    - Otherwise calculates the number of bus rides
+      using FJD 1.50 per ride and displays the result.
+  -->
+
+</body>
+</html>
